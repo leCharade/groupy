@@ -1,0 +1,18 @@
+@import url("https://use.typekit.net/bmn5zjg.css");
+* {
+  font-family: "Lato", sans-serif;
+}
+
+.welcome {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.welcome__title {
+  width: 100%;
+}
+.welcome__verticalbar {
+  width: 2px;
+  height: 200px;
+  background-color: #FD2D01;
+}
