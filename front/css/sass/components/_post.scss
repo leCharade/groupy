@@ -1,0 +1,28 @@
+.post {
+    border: 1px $color-secondary solid;
+    border-radius: 12px;
+    width:600px;
+    padding:14px;
+    margin:auto;
+    font-size:14px;
+    &__author {
+        font-size:17px;
+        color: $color-tertiary;
+        margin:0;
+    }
+    &__message {
+        margin:0;
+    }
+    &__actions {
+        display:flex;
+        &__number-replies {
+            margin:0 5px;
+        }
+        &__number-likes {
+            margin:0 5px;
+        }
+        & i {
+           font-size:18px; 
+        }
+    }
+}

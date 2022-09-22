@@ -1,18 +1,98 @@
 @import url("https://use.typekit.net/bmn5zjg.css");
 * {
   font-family: "Lato", sans-serif;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f1f2f5;
 }
 
 .welcome {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
+  background-color: #fff;
+  margin: 6%;
+  padding-bottom: 1%;
+  border-radius: 15px;
+  border: #FFD7D7 solid 2px;
 }
 .welcome__title {
   width: 100%;
+  text-align: center;
+  font-size: 18px;
+  margin: auto;
+  color: #4E5166;
 }
 .welcome__verticalbar {
   width: 2px;
-  height: 200px;
+  height: 300px;
   background-color: #FD2D01;
+}
+.welcome__form {
+  width: 40%;
+}
+.welcome__form h2 {
+  margin: auto;
+  width: fit-content;
+  color: #4E5166;
+  padding-bottom: 2%;
+}
+.welcome__form form {
+  margin: auto;
+  width: fit-content;
+  height: 250px;
+  display: flex;
+  flex: wrap;
+  flex-direction: column;
+  justify-content: space-around;
+}
+.welcome__form form input {
+  width: 400px;
+  height: 40px;
+  font-size: 15px;
+  padding-left: 15px;
+  border-radius: 20px;
+  border: #4E5166 solid 1px;
+}
+.welcome__form form button {
+  background-color: #ff3e3e;
+  color: white;
+  font-size: 15px;
+  border: none;
+  padding-bottom: 4px;
+  width: 160px;
+  height: 40px;
+  border-radius: 20px;
+  align-self: center;
+}
+
+.post {
+  border: 1px #FFD7D7 solid;
+  border-radius: 12px;
+  width: 600px;
+  padding: 14px;
+  margin: auto;
+  font-size: 14px;
+}
+.post__author {
+  font-size: 17px;
+  color: #4E5166;
+  margin: 0;
+}
+.post__message {
+  margin: 0;
+}
+.post__actions {
+  display: flex;
+}
+.post__actions__number-replies {
+  margin: 0 5px;
+}
+.post__actions__number-likes {
+  margin: 0 5px;
+}
+.post__actions i {
+  font-size: 18px;
 }
