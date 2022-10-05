@@ -1,10 +1,12 @@
 .post {
-    border: 1px $color-secondary solid;
+    display:block;
+    border: $color-secondary solid 1px;
     border-radius: 12px;
     width:600px;
     padding:14px;
     margin:auto;
     font-size:14px;
+    text-decoration:none;
     &__author {
         font-size:17px;
         color: $color-tertiary;
@@ -12,9 +14,11 @@
     }
     &__message {
         margin:0;
+        color: $color-text;
     }
     &__actions {
         display:flex;
+        color: $color-text;
         &__number-replies {
             margin:0 5px;
         }

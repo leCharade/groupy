@@ -17,12 +17,26 @@ exports.signup = (req, res, next) => {
                 password: hash,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                status: 0
+                rank: 0
             });
             // Si l'utilisateur a un format d'email valable, le compte est créé
             if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(user.email)) {
+                const accessToken = jwt.sign(
+                    { userId: user._id },
+                    process.env.JWT_SECRET,
+                    { expiresIn: '24h' }
+                    )
+                // const xsrfToken = crypto.randomBytes(64).toString('hex');
+                // res.cookie('access_token', accessToken, {
+                //     httpOnly: true,
+                //     secure: true,
+                //     maxAge: accessToken.expiresIn
+                // });
                 user.save()
-                    .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+                    .then(() => res.status(201).json({      
+                            userId: user._id,
+                            token: accessToken
+                    }))
                     .catch(error => res.status(400).json({ error }));
             }
             else {
@@ -45,13 +59,19 @@ exports.login = (req, res, next) => {
                         if (!valid) {
                             res.status(401).json({ message: 'Paire identifiant/mot de passe incorrecte.'})
                         } else {
+                            // const token = jwt.sign(
+                            //     { userId: user._id },
+                            //     process.env.JWT_SECRET,
+                            //     { expiresIn: '24h' }
+                            // )
+                            const accessToken = jwt.sign(
+                                { userId: user._id },
+                                process.env.JWT_SECRET,
+                                { expiresIn: '24h' }
+                            );
                             res.status(200).json({
                                 userId: user._id,
-                                token: jwt.sign(
-                                    { userId: user._id },
-                                    process.env.JWT_SECRET,
-                                    { expiresIn: '24h' }
-                                )
+                                token: accessToken
                             });
                         }
                     })

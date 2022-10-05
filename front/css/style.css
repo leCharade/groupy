@@ -69,12 +69,14 @@ body {
 }
 
 .post {
-  border: 1px #FFD7D7 solid;
+  display: block;
+  border: #FFD7D7 solid 1px;
   border-radius: 12px;
   width: 600px;
   padding: 14px;
   margin: auto;
   font-size: 14px;
+  text-decoration: none;
 }
 .post__author {
   font-size: 17px;
@@ -83,9 +85,11 @@ body {
 }
 .post__message {
   margin: 0;
+  color: #000;
 }
 .post__actions {
   display: flex;
+  color: #000;
 }
 .post__actions__number-replies {
   margin: 0 5px;
