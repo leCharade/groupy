@@ -2,9 +2,27 @@ const Post = require('../models/post');
 const User = require('../models/user');
 // const fs = require('fs');
 
+// exports.getAllPosts = (req, res, next) => {
+//     Post.find()
+//         .then(posts => res.status(200).json(posts))
+//         .catch(error => res.status(400).json({error}))
+// }
+
 exports.getAllPosts = (req, res, next) => {
     Post.find()
-        .then(posts => res.status(200).json(posts))
+        .then(posts => {
+            let listPosts = [];
+            for (singlePost of posts) {
+                User.findOne({_id: singlePost.userId})
+                .then(user => {
+                    const authorName = {author : user.firstName + ' ' + user.lastName};
+                    const postData = [singlePost, authorName];
+                    listPosts.push(postData);
+                })
+            }
+            
+            res.status(200).json(listPosts)
+        })
         .catch(error => res.status(400).json({error}))
 }
 
@@ -21,27 +39,20 @@ exports.getOnePost = (req, res, next) => {
 }
 
 exports.createPost = (req, res, next) => {
-    let message = req.body;
-    let message2 = req.params;
-    console.log(message);
-    console.log(message2);
-    /*
+
     const post = new Post({
-        userId: '63206fc2597118fb47266e2c',
-        message: message,
+        userId: '633dbbee4ede08636c068bb4',
+        message: req.body.message,
         time: Date(),
-        imageUrl: '',
+        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         tag: 'Work',
         replies: 0,
         postReplies: [],
         likes: 0,
-        dislikes: 0,
         usersLiked: [],
-        usersDisliked: []
-    })
-    console.log(post)
+    });
+
     post.save()
         .then(() => res.status(201).json({ message: 'Objet enregistré !' }))
         .catch(error => res.status(400).json({error}))
-        */
 }

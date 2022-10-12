@@ -56,17 +56,6 @@ body {
   border-radius: 20px;
   border: #4E5166 solid 1px;
 }
-.welcome__form form button {
-  background-color: #ff3e3e;
-  color: white;
-  font-size: 15px;
-  border: none;
-  padding-bottom: 4px;
-  width: 160px;
-  height: 40px;
-  border-radius: 20px;
-  align-self: center;
-}
 
 .post {
   display: block;
@@ -77,6 +66,7 @@ body {
   margin: auto;
   font-size: 14px;
   text-decoration: none;
+  background-color: #fff;
 }
 .post__author {
   font-size: 17px;
@@ -99,4 +89,16 @@ body {
 }
 .post__actions i {
   font-size: 18px;
+}
+
+button {
+  background-color: #ff3e3e;
+  color: white;
+  font-size: 15px;
+  border: none;
+  padding-bottom: 4px;
+  width: 160px;
+  height: 40px;
+  border-radius: 20px;
+  align-self: center;
 }

@@ -1,7 +1,17 @@
 const url = new URL(window.location.href);
 const postId = url.searchParams.get("id");
 
-fetch(`http://localhost:3000/api/post/${postId}`)
+const getToken = JSON.parse(localStorage.getItem('Token'));
+
+fetch(`http://localhost:3000/api/post/${postId}`, {
+    method: 'GET',
+    headers: {
+        'Authorization': 'Bearer ' + getToken['token'],
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+    }
+    })
+
     .then((res) => res.json())
     .then((post) => {
         console.log(post);
