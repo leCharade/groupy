@@ -16,7 +16,8 @@ function App() {
   function handleAddPost(post) {
     setPosts([...posts, post]);
   }
-  if (connected == true) {
+  
+  if (connected === true) {
     return (
       <Welcome />
     );

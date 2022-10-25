@@ -1,9 +1,15 @@
+.logo {
+    width:300px;
+    display:block;
+    margin:40px auto;
+}
+
 .welcome {
     display:flex;
     flex-wrap: wrap;
     justify-content:space-around;
     background-color:$color-background;
-    margin:6%;
+    margin:2% 6%;
     padding-bottom:1%;
     border-radius: 15px;
     border: $color-secondary solid 2px;

@@ -23,6 +23,8 @@ export default function AddPost(props) {
         setPost({...post, [name]: value});
     }
 
+    
+
     return (
         <div className="post-add">
             <h1>Nouveau message</h1>

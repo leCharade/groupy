@@ -9,7 +9,7 @@ export default function Timeline(props) {
                 {
                     posts.map(post => (
                         <div>
-                            <a href="post.html?id=${post._id}" class="post">
+                            <a href="post.html?id={post._id}" class="post">
                                 <h2 className="post__author">Tom Tournillon</h2>
                                 <div>
                                     

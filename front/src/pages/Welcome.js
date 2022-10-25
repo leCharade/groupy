@@ -1,10 +1,20 @@
 import React from 'react';
+import Logo from '../logo.png';
+import { useState } from 'react';
+
 export default function Welcome() { 
+
+    const [signup, setSignup] = useState({
+        signupfirstname: '',
+        signuplastname: '',
+        signupemail: '',
+        signuppassword: ''
+    })
 
     return (
         <>
         <header>
-            <h2>Logo Groupomania</h2>
+            <img className="logo" src={Logo} alt="Logo Groupy" title="Logo Groupy"/>
         </header>
 
         <div className="welcome">
