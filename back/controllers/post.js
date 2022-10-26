@@ -8,21 +8,27 @@ const User = require('../models/user');
 //         .catch(error => res.status(400).json({error}))
 // }
 
+// exports.getAllPosts = (req, res, next) => {
+//     Post.find()
+//         .then(posts => {
+//             let listPosts = [];
+//             for (singlePost of posts) {
+//                 User.findOne({_id: singlePost.userId})
+//                 .then(user => {
+//                     const authorName = {author : user.firstName + ' ' + user.lastName};
+//                     const postData = [singlePost, authorName];
+//                     listPosts.push(postData);
+//                 })
+//             }
+            
+//             res.status(200).json(listPosts)
+//         })
+//         .catch(error => res.status(400).json({error}))
+// }
+
 exports.getAllPosts = (req, res, next) => {
     Post.find()
-        .then(posts => {
-            let listPosts = [];
-            for (singlePost of posts) {
-                User.findOne({_id: singlePost.userId})
-                .then(user => {
-                    const authorName = {author : user.firstName + ' ' + user.lastName};
-                    const postData = [singlePost, authorName];
-                    listPosts.push(postData);
-                })
-            }
-            
-            res.status(200).json(listPosts)
-        })
+        .then(posts => res.status(200).json(posts))
         .catch(error => res.status(400).json({error}))
 }
 
