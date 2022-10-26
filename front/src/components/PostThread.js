@@ -1,9 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
-export default function PostItem(props) {
+export default function PostThread(props) {
 
-    const { post, handleSelectPost } = props;
+    const { post, author, handleSelectPost } = props;
 
     const timePost = new Date(parseInt(post.time));
 
@@ -15,8 +15,8 @@ export default function PostItem(props) {
 
     return (  
         <div key={post._id}>
-            <NavLink to="/post.html" className="post" post={post} onClick={() => handleSelectPost(post)}>
-                <h2 className="post__author">Tom Tournillon</h2>
+            <div className="post">
+                <h2 className="post__author">{author}</h2>
                 <div>
                     
                 </div>
@@ -28,7 +28,7 @@ export default function PostItem(props) {
                     <p className="post__actions__number-likes">{post.likes}</p>
                     <p>{day}/{month}/{year} {hour}:{minute}</p>
                 </div>
-            </NavLink>
+            </div>
         </div>
     )
 }

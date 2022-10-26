@@ -1,7 +1,8 @@
 import React from 'react';
 import PostItem from '../components/PostItem';
 import { useState, useEffect } from 'react';
-export default function Timeline() {
+export default function Timeline(props) {
+    const { handleSelectPost } = props;
 
     const [posts, setPosts] = useState([]);
     const getToken = JSON.parse(localStorage.getItem('Token'));
@@ -27,7 +28,7 @@ export default function Timeline() {
                     <div>
                         {
                             posts.map(post => (
-                                <PostItem post={post} key={post._id}/>
+                                <PostItem post={post} key={post._id} handleSelectPost={handleSelectPost}/>
                             ))
                         }
                     </div>

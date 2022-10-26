@@ -12,15 +12,10 @@ import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
-  const [posts, setPosts] = useState([]);
-  const [selectedPost, setPost] = useState([]);
+  const [post, setPost] = useState();
 
-  function handleAddPost(post) {
-    setPosts([...posts, post]);
-  }
-
-  function handleSelectPost(selectedPost) {
-    setPost(...selectedPost);
+  function handleSelectPost(post) {
+    setPost(post);
   }
 
   if (localStorage.getItem('Token') === null) {
@@ -45,10 +40,10 @@ function App() {
       <>
         <Menu />
         <Routes>
-          <Route path="/timeline" element={<Timeline posts={posts} handleSelectPost={handleSelectPost}/>} />
-          <Route path="/new" element={<AddPost handleAddPost={handleAddPost}/>} />
+          <Route path="/timeline" element={<Timeline handleSelectPost={handleSelectPost}/>} />
+          <Route path="/new" element={<AddPost />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/post.html" element={<Post selectedPost={selectedPost}/>}/>
+          <Route path="/post.html" element={<Post post={post}/>}/>
         </Routes>
       </>
     )

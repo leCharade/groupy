@@ -33,12 +33,14 @@ exports.getAllPosts = (req, res, next) => {
 }
 
 exports.getOnePost = (req, res, next) => {
+    const posts = [];
     Post.findOne({_id: req.params.id})
         .then(post => {
             User.findOne({_id: post.userId})
                 .then(user => {
                     const authorName = user.firstName + ' ' + user.lastName;
-                    res.status(200).json({post, authorName})
+                    posts.push({post, authorName});
+                    res.status(200).json(posts);
                 })
             })
         .catch(error => res.status(404).json({error}))
