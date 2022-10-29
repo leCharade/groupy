@@ -35,6 +35,7 @@ exports.signup = (req, res, next) => {
                 user.save()
                     .then(() => res.status(201).json({      
                             userId: user._id,
+                            rank: user.rank,
                             token: accessToken
                     }))
                     .catch(error => res.status(400).json({ error }));
@@ -71,6 +72,7 @@ exports.login = (req, res, next) => {
                             );
                             res.status(200).json({
                                 userId: user._id,
+                                rank: user.rank,
                                 token: accessToken
                             });
                         }

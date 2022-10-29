@@ -121,7 +121,7 @@ ul {
   border-radius: 12px;
   width: 600px;
   padding: 14px;
-  margin: auto;
+  margin: 20px auto;
   font-size: 14px;
   text-decoration: none;
   background-color: #fff;
@@ -140,12 +140,29 @@ ul {
   color: #000;
 }
 .post__actions__number-replies {
-  margin: 0 5px;
+  margin: 0 6px;
 }
 .post__actions__number-likes {
-  margin: 0 5px;
+  margin: 0 6px;
 }
-.post__actions i {
+.post__actions__date {
+  margin: 0 6px;
+}
+.post__actions__edit {
+  margin: 0 6px;
+  display: none;
+}
+.post__actions__edit__allow {
+  display: block;
+}
+.post__actions__delete {
+  margin: 0 6px;
+  display: none;
+}
+.post__actions__delete__allow {
+  display: block;
+}
+.post__actions svg {
   font-size: 18px;
 }
 

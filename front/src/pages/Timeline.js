@@ -28,7 +28,7 @@ export default function Timeline(props) {
                     <div>
                         {
                             posts.map(post => (
-                                <PostItem post={post} key={post._id} handleSelectPost={handleSelectPost}/>
+                                <PostItem post={post.postContent} author={post.authorName} key={post.postContent._id} handleSelectPost={handleSelectPost}/>
                             ))
                         }
                     </div>

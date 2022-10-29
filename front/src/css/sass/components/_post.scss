@@ -4,7 +4,7 @@
     border-radius: 12px;
     width:600px;
     padding:14px;
-    margin:auto;
+    margin:20px auto;
     font-size:14px;
     text-decoration:none;
     background-color:$color-background;
@@ -21,12 +21,29 @@
         display:flex;
         color: $color-text;
         &__number-replies {
-            margin:0 5px;
+            margin:0 6px;
         }
         &__number-likes {
-            margin:0 5px;
+            margin:0 6px;
         }
-        & i {
+        &__date {
+            margin:0 6px;
+        }
+        &__edit {
+            margin:0 6px;
+            display:none;
+            &__allow {
+                display:block;
+            }
+        }
+        &__delete {
+            margin:0 6px;
+            display:none;
+            &__allow {
+                display:block;
+            }
+        }
+        & svg {
            font-size:18px; 
         }
     }

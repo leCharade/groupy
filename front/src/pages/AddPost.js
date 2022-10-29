@@ -1,20 +1,36 @@
 import React from 'react';
 import { useState } from 'react';
 
-export default function AddPost(props) {
+export default function AddPost() {
     const [post, setPost] = useState({
-        postmessage: '',
-        posttag: ''
+        message: '',
+        tag: ''
     })
-
-    const { handleAddPost } = props;
+    const getToken = JSON.parse(localStorage.getItem('Token'));
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        handleAddPost(post);
+        console.log(post);
+        fetch('http://localhost:4200/api/post/', {
+                method: 'POST',
+                headers: {
+                    'Authorization': 'Bearer ' + getToken['token'],
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(post)
+    })
+
+    .then((res) => res.json())
+    .then(() => {
+        window.location.href = '/timeline';
+    })
+    .catch(() => {
+        alert('Une erreur est survenue, veuillez réessayer plus tard.')
+    })
         setPost({
-            postmessage: '',
-            posttag: ''
+            message: '',
+            tag: ''
         })
     }
 
@@ -30,13 +46,13 @@ export default function AddPost(props) {
             <h1>Nouveau message</h1>
             <div>
                 <form onSubmit={(evt) => handleSubmit(evt)}>
-                    <label htmlFor="postmessage">Écrivez votre message :</label>
+                    <label htmlFor="message">Écrivez votre message :</label>
                     <br />
-                    <textarea name="postmessage" id="postmessage" cols="30" rows="10" value={post.postmessage} onChange={(evt) => handleChange(evt)}></textarea>
+                    <textarea name="message" id="message" cols="30" rows="10" value={post.message} onChange={(evt) => handleChange(evt)}></textarea>
                     <br />
-                    <label htmlFor="posttag">Choisissez un tag :</label>
+                    <label htmlFor="tag">Choisissez un tag :</label>
                     <br />
-                    <select name="posttag" id="posttag" value={post.posttag} onChange={(evt) => handleChange(evt)}>
+                    <select name="tag" id="tag" value={post.tag} onChange={(evt) => handleChange(evt)}>
                         <option value="none">(sélectionnez un tag)</option>
                         <option value="Work">Work</option>
                         <option value="Tech">Tech</option>

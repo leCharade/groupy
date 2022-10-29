@@ -1,9 +1,26 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faComment, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
 
 export default function PostItem(props) {
 
-    const { post, handleSelectPost } = props;
+    const { post, author, handleSelectPost } = props;
+
+    const userId = JSON.parse(localStorage.getItem('Token')).userId;
+    const rank = JSON.parse(localStorage.getItem('Token')).rank;
+    let allowEdit = 'post__actions__edit';
+    let allowDelete = 'post__actions__delete'
+    let allowLike = 'post__actions__like';
+
+    if (userId === post.userId || rank === 1) {
+        allowEdit = 'post__actions__edit post__actions__edit__allow';
+        allowDelete = 'post__actions__delete post__actions__delete__allow';
+    }
+    if (userId !== post.userId) {
+        allowLike = 'post__actions__like post__actions__like__allow';
+    }
+    console.log(allowEdit, allowLike);
 
     const timePost = new Date(parseInt(post.time));
 
@@ -16,17 +33,19 @@ export default function PostItem(props) {
     return (  
         <div key={post._id}>
             <NavLink to="/post.html" className="post" post={post} onClick={() => handleSelectPost(post)}>
-                <h2 className="post__author">Tom Tournillon</h2>
+                <h2 className="post__author">{author}</h2>
                 <div>
                     
                 </div>
                 <p className="post__message">{post.message}</p>
                 <div className="post__actions">
-                    <i className="fa-solid fa-comment"></i>
+                    <FontAwesomeIcon icon={faComment} />
                     <p className="post__actions__number-replies">{post.replies}</p>
-                    <i className="fa-solid fa-thumbs-up"></i>
+                    <FontAwesomeIcon icon={faThumbsUp} />
                     <p className="post__actions__number-likes">{post.likes}</p>
-                    <p>{day}/{month}/{year} {hour}:{minute}</p>
+                    <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
+                    <p className={allowEdit}>Modifier</p>
+                    <p className={allowDelete}>Supprimer</p>
                 </div>
             </NavLink>
         </div>
