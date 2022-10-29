@@ -29,6 +29,11 @@ export default function PostThread(props) {
     const hour = timePost.getHours().toString().padStart(2, "0");
     const minute = timePost.getMinutes().toString().padStart(2, "0");
 
+    let hideIfNotFirst = "display";
+    if (post.replyTo !== "ORIGINAL") {
+        hideIfNotFirst = "hide";
+    }
+
     return (  
         <div key={post._id}>
             <div className="post">
@@ -38,11 +43,13 @@ export default function PostThread(props) {
                 </div>
                 <p className="post__message">{post.message}</p>
                 <div className="post__actions">
-                    <FontAwesomeIcon icon={faComment} />
-                    <p className="post__actions__number-replies">{post.replies}</p>
-                    <FontAwesomeIcon icon={faThumbsUp} />
-                    <p className="post__actions__number-likes">{post.likes}</p>
                     <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
+                    <FontAwesomeIcon icon={faThumbsUp} /> 
+                    <p className="post__actions__number-likes">{post.likes}</p>
+                    <div className={hideIfNotFirst}>
+                        <FontAwesomeIcon icon={faComment} />
+                        <p className="post__actions__number-replies">{post.replies}</p>
+                    </div>
                     <p className={allowEdit}>Modifier</p>
                     <p className={allowDelete}>Supprimer</p>
                 </div>

@@ -46,5 +46,12 @@
         & svg {
            font-size:18px; 
         }
+        & .hide {
+            display:none;
+        }
+        & .display {
+            display:flex;
+        }
+        
     }
 }

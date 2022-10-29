@@ -83,8 +83,24 @@ exports.getOnePost = (req, res, next) => {
                 .then(user => {
                     const authorName = user.firstName + ' ' + user.lastName;
                     posts.push({post, authorName});
-                    
-                    res.status(200).json(posts);
+                    const listReplies = post.postReplies;
+                    let i = 0;
+                    for (reply of listReplies) {
+                        const replyId = reply.toHexString();
+                        Post.findOne({_id: replyId})
+                            .then(post => {
+                                User.findOne({_id: post.userId})
+                                    .then(replyUser => {
+                                        const authorName = replyUser.firstName + ' ' + replyUser.lastName;
+                                        posts.push({post, authorName});
+                                        i++;
+                                        if (listReplies.length <= i) {
+                                            console.log(posts);
+                                            res.status(200).json(posts);
+                                        }
+                                    })
+                            })
+                    }
                 })
             })
         .catch(error => res.status(404).json({error}))

@@ -39,11 +39,11 @@ export default function PostItem(props) {
                 </div>
                 <p className="post__message">{post.message}</p>
                 <div className="post__actions">
-                    <FontAwesomeIcon icon={faComment} />
-                    <p className="post__actions__number-replies">{post.replies}</p>
+                    <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
                     <FontAwesomeIcon icon={faThumbsUp} />
                     <p className="post__actions__number-likes">{post.likes}</p>
-                    <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
+                    <FontAwesomeIcon icon={faComment} />
+                    <p className="post__actions__number-replies">{post.replies}</p>
                     <p className={allowEdit}>Modifier</p>
                     <p className={allowDelete}>Supprimer</p>
                 </div>

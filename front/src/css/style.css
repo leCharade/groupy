@@ -165,6 +165,12 @@ ul {
 .post__actions svg {
   font-size: 18px;
 }
+.post__actions .hide {
+  display: none;
+}
+.post__actions .display {
+  display: flex;
+}
 
 .btn {
   background-color: #ff3e3e;
