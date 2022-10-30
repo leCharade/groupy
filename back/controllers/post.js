@@ -21,46 +21,6 @@ exports.getAllPosts = (req, res, next) => {
                 User.findOne({_id: post.userId, replyTo: 'ORIGINAL'})
                     .then(user => {
                         const authorName = user.firstName + ' ' + user.lastName; // On définit le nom de l'auteur à partir du firstName et du lastName
-                        
-                        // Ensuite, il convient de vérifier si l'utilisateur :
-                        // 1) S'il est l'auteur ou un administrateur, auquel cas il peut modifier ou supprimer le post ;
-                        // 2) N'est pas l'auteur du post, auquel cas il peut liker celui-ci .
-                        let editStatus = false;
-                        let likeStatus = false;
-                        const token = req.headers.authorization.split(' ')[1];
-                        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-                        const userId = decodedToken.userId;
-                        
-                        // Si l'utilisateur est l'auteur du post : true
-                        Post.findOne({ _id: postContent._id })
-                            .then (editPost => {
-                                if (editPost.userId === userId) {
-                                    editStatus = true;
-                                    return editStatus;
-                                }
-                                else {
-                                    // Si l'utilisateur a un rank 1 : true
-                                    User.findOne({ _id: userId })
-                                        .then (statusUser => {
-                                            if (statusUser.rank === 1) {
-                                                editStatus = true;
-                                                return editStatus;
-                                            }
-                                        })
-                                }
-                            })  
-                        // Si l'utilisateur n'est pas l'auteur du post : true
-                        Post.findOne({ _id: postContent._id })
-                            .then (likePost => {
-                                if (likePost.userId !== userId) {
-                                    likeStatus = true;
-                                }
-                                return likeStatus;
-                            })
-                        
-                        // On établit les statuts et on push le tout
-                        // const status = [editStatus, likeStatus];
-                        // posts.push({postContent, authorName, status});
 
                         posts.push({postContent, authorName});
                         i++;
@@ -85,20 +45,25 @@ exports.getOnePost = (req, res, next) => {
                     posts.push({post, authorName});
                     const listReplies = post.postReplies;
                     let i = 0;
-                    for (reply of listReplies) {
-                        const replyId = reply.toHexString();
-                        Post.findOne({_id: replyId})
-                            .then(post => {
-                                User.findOne({_id: post.userId})
-                                    .then(replyUser => {
-                                        const authorName = replyUser.firstName + ' ' + replyUser.lastName;
-                                        posts.push({post, authorName});
-                                        i++;
-                                        if (listReplies.length <= i) {
-                                            res.status(200).json(posts);
-                                        }
-                                    })
-                            })
+                    if (listReplies.length > 0) {
+                        for (reply of listReplies) {
+                            const replyId = reply.toHexString();
+                            Post.findOne({_id: replyId})
+                                .then(post => {
+                                    User.findOne({_id: post.userId})
+                                        .then(replyUser => {
+                                            const authorName = replyUser.firstName + ' ' + replyUser.lastName;
+                                            posts.push({post, authorName});
+                                            i++;
+                                            if (listReplies.length <= i) {
+                                                res.status(200).json(posts);
+                                            }
+                                        })
+                                })
+                        }
+                    }
+                    else {
+                        res.status(200).json(posts);
                     }
                 })
             })
@@ -114,7 +79,7 @@ exports.createPost = (req, res, next) => {
         userId: authorId,
         message: req.body.message,
         time: Date.now(),
-        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         tag: req.body.tag,
         replies: 0,
         postReplies: [],
@@ -137,7 +102,7 @@ exports.replyPost = (req, res, next) => {
         userId: authorId,
         message: req.body.message,
         time: Date.now(),
-        // imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
         likes: 0,
         usersLiked: [],
         replyTo: req.params.id

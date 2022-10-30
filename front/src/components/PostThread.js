@@ -49,16 +49,23 @@ export default function PostThread(props) {
                     </div>
                 </div>
                 <p className="post__message">{post.message}</p>
+                <img className="post__image" src={post.imageUrl} />
                 <div className="post__actions">
-                    <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
-                    <FontAwesomeIcon icon={faThumbsUp} /> 
-                    <p className="post__actions__number-likes">{post.likes}</p>
-                    <div className={hideIfNotFirst}>
-                        <FontAwesomeIcon icon={faComment} />
-                        <p className="post__actions__number-replies">{post.replies}</p>
+                    <div>
+                        <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
                     </div>
-                    <p className={allowEdit}>Modifier</p>
-                    <p className={allowDelete}>Supprimer</p>
+                    <div>
+                    <FontAwesomeIcon icon={faThumbsUp} /> 
+                        <p className="post__actions__number-likes">{post.likes}</p>
+                        <div className={hideIfNotFirst}>
+                            <FontAwesomeIcon icon={faComment} />
+                            <p className="post__actions__number-replies">{post.replies}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p className={allowEdit}>Modifier</p>
+                        <p className={allowDelete}>Supprimer</p>
+                    </div>
                 </div>
             </div>
         </div>

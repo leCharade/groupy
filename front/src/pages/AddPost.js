@@ -1,45 +1,52 @@
 import React from 'react';
+import axios from 'axios';
 import { useState } from 'react';
 
 export default function AddPost() {
     const [post, setPost] = useState({
         message: '',
-        tag: '',
-        picture: ''
+        tag: ''
     })
+    const [selectedFile, setSelectedFile] = useState();
+
     const getToken = JSON.parse(localStorage.getItem('Token'));
 
     function handleSubmit(evt) {
         evt.preventDefault();
-        console.log(post);
+        const data = new FormData();
+        data.append('message', post.message);
+        data.append('tag', post.tag);
+        data.append('image', selectedFile);
         fetch('http://localhost:4200/api/post/', {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + getToken['token'],
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(post)
-    })
-
-    .then((res) => res.json())
-    .then(() => {
-        window.location.href = '/timeline';
-    })
-    .catch(() => {
-        alert('Une erreur est survenue, veuillez réessayer plus tard.')
-    })
-        setPost({
-            message: '',
-            tag: '',
-            picture: ''
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getToken['token'],
+            },
+            body: data
         })
+            .then((res) => {console.log(res); res.json()})
+            .then(() => {
+                setPost({
+                    message: '',
+                    tag: '',
+                })
+                window.location.href = '/timeline';
+            })
+            .catch(() => {
+                alert('Une erreur est survenue, veuillez réessayer plus tard.')
+            })
     }
 
     function handleChange(evt) {
         const { name, value } = evt.target;
+        console.log(evt.target.files)
         setPost({...post, [name]: value});
     }
+    function handleFileChange(evt) {
+        console.log(evt.target.files);
+        console.log(evt.target.files[0]);
+		setSelectedFile(evt.target.files[0]);
+	};
 
     
 
@@ -63,7 +70,7 @@ export default function AddPost() {
                     <br />
                     <label htmlFor="file">Sélectionnez une image :</label>
                     <br />
-                    <input type="file" id="picture" name="picture" accept="image/png, image/jpeg" value={post.picture} onChange={(evt) => handleChange(evt)}></input>
+                    <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
                     <br />
                     <input className="btn" type="submit" value="Envoyer" />
                 </form>

@@ -12,6 +12,11 @@
         display:flex;
         justify-content:space-between;
     }
+    &__image {
+        max-height:200px;
+        display:block;
+        margin:auto;
+    }
     &__author {
         font-size:17px;
         color: $color-tertiary;
@@ -47,6 +52,10 @@
         display:flex;
         color: $color-text;
         margin:12px 0 6px 0;
+        justify-content: space-between;
+        & div {
+            display:flex;
+        }
         &__number-replies {
             margin:0 6px;
         }

@@ -8,6 +8,7 @@ export default function Post(props) {
     const [reply, setReply] = useState({
         message: ''
     })
+    const [selectedFile, setSelectedFile] = useState();
     const getToken = JSON.parse(localStorage.getItem('Token'));
     const fetchUrl = 'http://localhost:4200/api/post/' + post._id;
 
@@ -28,14 +29,15 @@ export default function Post(props) {
 
     function handleSubmit(evt) {
         evt.preventDefault();
+        const data = new FormData();
+        data.append('message', reply.message);
+        data.append('image', selectedFile);
         fetch(fetchUrl, {
-                method: 'POST',
-                headers: {
-                    'Authorization': 'Bearer ' + getToken['token'],
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify(reply)
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getToken['token'],
+            },
+            body: data
     })
     .then((res) => res.json())
     .then(() => {
@@ -54,6 +56,9 @@ export default function Post(props) {
         const { name, value } = evt.target;
         setReply({...reply, [name]: value});
     }
+    function handleFileChange(evt) {
+		setSelectedFile(evt.target.files[0]);
+	};
     
         return (
             <>
@@ -72,7 +77,9 @@ export default function Post(props) {
                             <br />
                             <textarea name="message" id="message" cols="30" rows="10" value={reply.message} onChange={(evt) => handleChange(evt)}></textarea>
                             <br />
-                            <label htmlFor="tag">Choisissez un tag :</label>
+                            <label htmlFor="file">Sélectionnez une image :</label>
+                            <br />
+                            <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
                             <br />
                             <input className="btn" type="submit" value="Envoyer" />
                         </form>
