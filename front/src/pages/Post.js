@@ -23,7 +23,6 @@ export default function Post(props) {
             .then((res) => res.json())
             .then((data) => {
                 setPosts(data);
-                console.log(data);
             })
     }, [])
 

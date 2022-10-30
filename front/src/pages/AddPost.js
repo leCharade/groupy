@@ -4,7 +4,8 @@ import { useState } from 'react';
 export default function AddPost() {
     const [post, setPost] = useState({
         message: '',
-        tag: ''
+        tag: '',
+        picture: ''
     })
     const getToken = JSON.parse(localStorage.getItem('Token'));
 
@@ -30,7 +31,8 @@ export default function AddPost() {
     })
         setPost({
             message: '',
-            tag: ''
+            tag: '',
+            picture: ''
         })
     }
 
@@ -58,6 +60,10 @@ export default function AddPost() {
                         <option value="Tech">Tech</option>
                         <option value="RH">RH</option>
                     </select>
+                    <br />
+                    <label htmlFor="file">Sélectionnez une image :</label>
+                    <br />
+                    <input type="file" id="picture" name="picture" accept="image/png, image/jpeg" value={post.picture} onChange={(evt) => handleChange(evt)}></input>
                     <br />
                     <input className="btn" type="submit" value="Envoyer" />
                 </form>

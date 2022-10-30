@@ -126,18 +126,45 @@ ul {
   text-decoration: none;
   background-color: #fff;
 }
+.post__header {
+  display: flex;
+  justify-content: space-between;
+}
 .post__author {
   font-size: 17px;
   color: #4E5166;
   margin: 0;
 }
+.post__tag {
+  display: none;
+}
+.post__tag--show {
+  display: flex;
+  background-color: #FD2D01;
+  color: white;
+  font-weight: bold;
+  font-style: italic;
+  font-size: 16px;
+  width: fit-content;
+  height: 30px;
+  border-radius: 15px;
+  padding: 4px 6px;
+  justify-items: right;
+}
+.post__tag--show p {
+  margin: 0px 4px;
+}
+.post__tag--show svg {
+  margin: 4px 4px;
+}
 .post__message {
-  margin: 0;
+  margin: 6px 0;
   color: #000;
 }
 .post__actions {
   display: flex;
   color: #000;
+  margin: 12px 0 6px 0;
 }
 .post__actions__number-replies {
   margin: 0 6px;
@@ -146,7 +173,7 @@ ul {
   margin: 0 6px;
 }
 .post__actions__date {
-  margin: 0 6px;
+  margin: 0 6px 0 0;
 }
 .post__actions__edit {
   margin: 0 6px;

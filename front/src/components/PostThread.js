@@ -1,6 +1,6 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
+import { faComment, faThumbsUp, faBookmark } from '@fortawesome/free-regular-svg-icons'
 
 export default function PostThread(props) {
 
@@ -19,7 +19,6 @@ export default function PostThread(props) {
     if (userId !== post.userId) {
         allowLike = 'post__actions__like post__actions__like__allow';
     }
-    console.log(allowEdit, allowLike);
 
     const timePost = new Date(parseInt(post.time));
 
@@ -28,18 +27,26 @@ export default function PostThread(props) {
     const day = timePost.getDate().toString().padStart(2, "0");
     const hour = timePost.getHours().toString().padStart(2, "0");
     const minute = timePost.getMinutes().toString().padStart(2, "0");
+    let showTag = 'post__tag'
 
     let hideIfNotFirst = "display";
     if (post.replyTo !== "ORIGINAL") {
         hideIfNotFirst = "hide";
     }
 
+    if (post.tag !== "" && post.replyTo === "ORIGINAL") {
+        showTag = 'post__tag--show'
+    }
+
     return (  
         <div key={post._id}>
             <div className="post">
-                <h2 className="post__author">{author}</h2>
-                <div>
-                    
+                <div className="post__header">
+                    <h2 className="post__author">{author}</h2>
+                    <div className={showTag}>
+                        <FontAwesomeIcon icon={faBookmark} />
+                        <p>{post.tag}</p>
+                    </div>
                 </div>
                 <p className="post__message">{post.message}</p>
                 <div className="post__actions">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faComment, faThumbsUp } from '@fortawesome/free-regular-svg-icons'
+import { faComment, faThumbsUp, faBookmark } from '@fortawesome/free-regular-svg-icons'
 
 export default function PostItem(props) {
 
@@ -12,6 +12,7 @@ export default function PostItem(props) {
     let allowEdit = 'post__actions__edit';
     let allowDelete = 'post__actions__delete'
     let allowLike = 'post__actions__like';
+    let showTag = 'post__tag'
 
     if (userId === post.userId || rank === 1) {
         allowEdit = 'post__actions__edit post__actions__edit__allow';
@@ -20,7 +21,10 @@ export default function PostItem(props) {
     if (userId !== post.userId) {
         allowLike = 'post__actions__like post__actions__like__allow';
     }
-    console.log(allowEdit, allowLike);
+
+    if (post.tag !== "") {
+        showTag = 'post__tag--show'
+    }
 
     const timePost = new Date(parseInt(post.time));
 
@@ -33,9 +37,12 @@ export default function PostItem(props) {
     return (  
         <div key={post._id}>
             <NavLink to="/post.html" className="post" post={post} onClick={() => handleSelectPost(post)}>
-                <h2 className="post__author">{author}</h2>
-                <div>
-                    
+                <div className="post__header">
+                    <h2 className="post__author">{author}</h2>
+                    <div className={showTag}>
+                        <FontAwesomeIcon icon={faBookmark} />
+                        <p>{post.tag}</p>
+                    </div>
                 </div>
                 <p className="post__message">{post.message}</p>
                 <div className="post__actions">

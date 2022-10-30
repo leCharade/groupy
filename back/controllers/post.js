@@ -95,7 +95,6 @@ exports.getOnePost = (req, res, next) => {
                                         posts.push({post, authorName});
                                         i++;
                                         if (listReplies.length <= i) {
-                                            console.log(posts);
                                             res.status(200).json(posts);
                                         }
                                     })
