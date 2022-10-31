@@ -1,5 +1,6 @@
 import React from 'react';
 import PostThread from '../components/PostThread';
+import EditPost from '../components/EditPost';
 import { useState, useEffect } from 'react';
 
 export default function Post(props) {
@@ -9,6 +10,11 @@ export default function Post(props) {
         message: ''
     })
     const [selectedFile, setSelectedFile] = useState();
+    const [editPost, setEditPost] = useState({
+        message: '',
+        tag: ''
+    });
+
     const getToken = JSON.parse(localStorage.getItem('Token'));
     const fetchUrl = 'http://localhost:4200/api/post/' + post._id;
 
@@ -59,16 +65,21 @@ export default function Post(props) {
     function handleFileChange(evt) {
 		setSelectedFile(evt.target.files[0]);
 	};
+    function handleEditPost(editPost) {
+        setEditPost(editPost);
+    }
+    
     
         return (
             <>
                 <div className="timeline">
                     {
                         posts.map(post => (
-                            <PostThread post={post.post} author={post.authorName} key={post.post._id}/>
+                            <PostThread post={post.post} author={post.authorName} handleEditPost={handleEditPost} key={post.post._id}/>
                         ))
                     }
                 </div>
+                <EditPost editPost={editPost}></EditPost>
                 <div className="post-add">
                     <h1>Nouveau message</h1>
                     <div>

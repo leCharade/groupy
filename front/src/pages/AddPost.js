@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import { useState } from 'react';
 
 export default function AddPost() {
@@ -39,12 +38,9 @@ export default function AddPost() {
 
     function handleChange(evt) {
         const { name, value } = evt.target;
-        console.log(evt.target.files)
         setPost({...post, [name]: value});
     }
     function handleFileChange(evt) {
-        console.log(evt.target.files);
-        console.log(evt.target.files[0]);
 		setSelectedFile(evt.target.files[0]);
 	};
 

@@ -4,7 +4,7 @@ import { faComment, faThumbsUp, faBookmark } from '@fortawesome/free-regular-svg
 
 export default function PostThread(props) {
 
-    const { post, author } = props;
+    const { post, author, handleEditPost } = props;
 
     const userId = JSON.parse(localStorage.getItem('Token')).userId;
     const rank = JSON.parse(localStorage.getItem('Token')).rank;
@@ -39,35 +39,37 @@ export default function PostThread(props) {
     }
 
     return (  
-        <div key={post._id}>
-            <div className="post">
-                <div className="post__header">
-                    <h2 className="post__author">{author}</h2>
-                    <div className={showTag}>
-                        <FontAwesomeIcon icon={faBookmark} />
-                        <p>{post.tag}</p>
-                    </div>
-                </div>
-                <p className="post__message">{post.message}</p>
-                <img className="post__image" src={post.imageUrl} />
-                <div className="post__actions">
-                    <div>
-                        <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
-                    </div>
-                    <div>
-                    <FontAwesomeIcon icon={faThumbsUp} /> 
-                        <p className="post__actions__number-likes">{post.likes}</p>
-                        <div className={hideIfNotFirst}>
-                            <FontAwesomeIcon icon={faComment} />
-                            <p className="post__actions__number-replies">{post.replies}</p>
+        <>
+            <div key={post._id}>
+                <div className="post">
+                    <div className="post__header">
+                        <h2 className="post__author">{author}</h2>
+                        <div className={showTag}>
+                            <FontAwesomeIcon icon={faBookmark} />
+                            <p>{post.tag}</p>
                         </div>
                     </div>
-                    <div>
-                        <p className={allowEdit}>Modifier</p>
-                        <p className={allowDelete}>Supprimer</p>
+                    <p className="post__message">{post.message}</p>
+                    <img className="post__image" src={post.imageUrl} />
+                    <div className="post__actions">
+                        <div>
+                            <p className="post__actions__date">{day}/{month}/{year} {hour}:{minute}</p>
+                        </div>
+                        <div>
+                        <FontAwesomeIcon icon={faThumbsUp} /> 
+                            <p className="post__actions__number-likes">{post.likes}</p>
+                            <div className={hideIfNotFirst}>
+                                <FontAwesomeIcon icon={faComment} />
+                                <p className="post__actions__number-replies">{post.replies}</p>
+                            </div>
+                        </div>
+                        <div>
+                            <p className={allowEdit} onClick={() => handleEditPost(post)}>Modifier</p>
+                            <p className={allowDelete}>Supprimer</p>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </>
     )
 }

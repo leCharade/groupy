@@ -14,14 +14,6 @@ export default function PostItem(props) {
     let allowLike = 'post__actions__like';
     let showTag = 'post__tag'
 
-    if (userId === post.userId || rank === 1) {
-        allowEdit = 'post__actions__edit post__actions__edit__allow';
-        allowDelete = 'post__actions__delete post__actions__delete__allow';
-    }
-    if (userId !== post.userId) {
-        allowLike = 'post__actions__like post__actions__like__allow';
-    }
-
     if (post.tag !== "") {
         showTag = 'post__tag--show'
     }
@@ -36,7 +28,7 @@ export default function PostItem(props) {
 
     return (  
         <div key={post._id}>
-            <NavLink to="/post.html" className="post" post={post} onClick={() => handleSelectPost(post)}>
+            <div className="post">
                 <div className="post__header">
                     <h2 className="post__author">{author}</h2>
                     <div className={showTag}>
@@ -57,11 +49,10 @@ export default function PostItem(props) {
                         <p className="post__actions__number-replies">{post.replies}</p>
                     </div>
                     <div>
-                        <p className={allowEdit}>Modifier</p>
-                        <p className={allowDelete}>Supprimer</p>
+                        <NavLink to="/post.html" className="showthread" post={post} onClick={() => handleSelectPost(post)}>Voir la discussion</NavLink>
                     </div>
                 </div>
-            </NavLink>
+            </div>
         </div>
     )
 }
