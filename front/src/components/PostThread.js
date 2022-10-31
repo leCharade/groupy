@@ -20,6 +20,16 @@ export default function PostThread(props) {
         allowLike = 'post__actions__like post__actions__like__allow';
     }
 
+    const findLike = post.usersLiked.includes(userId)
+    let likeOption = '';
+    if (findLike === true) {
+        likeOption = "Je n'aime plus";
+    }
+    else {
+        likeOption = "J'aime"
+    }
+    
+
     const timePost = new Date(parseInt(post.time));
 
     const year = timePost.getFullYear(); 
@@ -40,22 +50,19 @@ export default function PostThread(props) {
 
     function handleLikePost(evt) {
         evt.preventDefault();
-        const data = {like: 1}
-        console.log(data)
+        const data = {like: findLike}
         const getToken = JSON.parse(localStorage.getItem('Token'));
         const fetchUrl = 'http://localhost:4200/api/post/' + post._id + '/like'
         fetch(fetchUrl, {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + getToken['token'],
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(data)
         })
-            .then((res) => {console.log(res); res.json()})
-            .then(() => {
-                alert();
-                window.location.href = '/timeline'
-            })
+            .then((res) => res.json())
             .catch(() => {
                 alert('Une erreur est survenue, veuillez réessayer plus tard.')
             })
@@ -88,7 +95,7 @@ export default function PostThread(props) {
                             </div>
                         </div>
                         <div>
-                            <p className={allowLike} onClick={(evt) => handleLikePost(evt)}>J'aime</p>
+                            <p className={allowLike} onClick={(evt) => handleLikePost(evt)}>{likeOption}</p>
                             <p className={allowEdit} onClick={() => handleEditPost(post)}>Modifier</p>
                             <p className={allowDelete} onClick={() => handleDeletePost(post)}>Supprimer</p>
                         </div>

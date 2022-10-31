@@ -281,18 +281,17 @@ exports.deletePost = (req, res, next) => {
 }
 
 exports.likePost = (req, res, next) => {
-    console.log('on est là', req.body.like, req.body, req.params.id)
     const postId = req.params.id;
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
     const like = req.body.like;
     // Si l'utilisateur a cliqué sur Like, on like le post
-    if (like === 1) {
+    if (like === false) {
       Post.updateOne(
         { _id: postId },
         {
-          $inc: { likes: like },
+          $inc: { likes: 1 },
           $push: { usersLiked: userId },
         }
       )
