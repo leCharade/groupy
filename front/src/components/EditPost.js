@@ -2,10 +2,10 @@ import React from 'react';
 import { useState } from 'react';
 
 export default function EditPost(props) {
-    const { editPost } = props;
+    const { editPost, handleDisableEditPost } = props;
     const [post, setPost] = useState({
-        message: editPost.message,
-        tag: editPost.tag
+        message: '',
+        tag: ''
     })
     const [selectedFile, setSelectedFile] = useState();
 
@@ -17,8 +17,12 @@ export default function EditPost(props) {
         data.append('message', post.message);
         data.append('tag', post.tag);
         data.append('image', selectedFile);
-        fetch('http://localhost:4200/api/post/', {
-            method: 'POST',
+        console.log(post.message, post.tag, selectedFile);
+
+        const fetchUrl = 'http://localhost:4200/api/post/' + editPost.editPost._id
+
+        fetch(fetchUrl, {
+            method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + getToken['token'],
             },
@@ -26,6 +30,7 @@ export default function EditPost(props) {
         })
             .then((res) => {console.log(res); res.json()})
             .then(() => {
+                alert();
                 setPost({
                     message: '',
                     tag: '',
@@ -45,6 +50,11 @@ export default function EditPost(props) {
 		setSelectedFile(evt.target.files[0]);
 	};
 
+    let showTag = 'tag-hide';
+    if (editPost.editTag === true) {
+        showTag = 'tag'
+    }
+
     
     if (editPost.message !== '') {
         return (
@@ -59,21 +69,21 @@ export default function EditPost(props) {
                             <br />
                             <textarea name="message" id="message" cols="30" rows="10" value={post.message} onChange={(evt) => handleChange(evt)}></textarea>
                             <br />
-                            <label htmlFor="tag">Choisissez un tag :</label>
-                            <br />
-                            <select name="tag" id="tag" value={post.tag} onChange={(evt) => handleChange(evt)}>
+                            <label htmlFor="tag" className={showTag}>Choisissez un tag :</label>
+                            <br className={showTag} />
+                            <select name="tag" id="tag" className={showTag} value={post.tag} onChange={(evt) => handleChange(evt)}>
                                 <option value="none">(sélectionnez un tag)</option>
                                 <option value="Work">Work</option>
                                 <option value="Tech">Tech</option>
                                 <option value="RH">RH</option>
                             </select>
-                            <br />
+                            <br className={showTag} />
                             <label htmlFor="file">Sélectionnez une image :</label>
                             <br />
                             <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
                             <br />
                             <input className="btn" type="submit" value="Envoyer" />
-                            <div className="btn">Annuler</div>
+                            <div className="btn" onClick={() => handleDisableEditPost()}>Annuler</div>
                         </form>
                     </div>
                 </div>

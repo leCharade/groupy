@@ -79,6 +79,13 @@
                 display:block;
             }
         }
+        &__like {
+            margin:0 6px;
+            display:none;
+            &__allow {
+                display:block;
+            }
+        }
         & svg {
            font-size:18px; 
         }

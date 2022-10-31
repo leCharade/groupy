@@ -123,6 +123,10 @@ textarea {
   height: 100%;
 }
 
+.tag-hide {
+  display: none;
+}
+
 .settings {
   padding: 20px;
 }
@@ -227,6 +231,13 @@ ul {
   display: none;
 }
 .post__actions__delete__allow {
+  display: block;
+}
+.post__actions__like {
+  margin: 0 6px;
+  display: none;
+}
+.post__actions__like__allow {
   display: block;
 }
 .post__actions svg {

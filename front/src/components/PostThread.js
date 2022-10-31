@@ -4,12 +4,12 @@ import { faComment, faThumbsUp, faBookmark } from '@fortawesome/free-regular-svg
 
 export default function PostThread(props) {
 
-    const { post, author, handleEditPost } = props;
+    const { post, author, handleEditPost, handleDeletePost } = props;
 
     const userId = JSON.parse(localStorage.getItem('Token')).userId;
     const rank = JSON.parse(localStorage.getItem('Token')).rank;
     let allowEdit = 'post__actions__edit';
-    let allowDelete = 'post__actions__delete'
+    let allowDelete = 'post__actions__delete';
     let allowLike = 'post__actions__like';
 
     if (userId === post.userId || rank === 1) {
@@ -38,6 +38,30 @@ export default function PostThread(props) {
         showTag = 'post__tag--show'
     }
 
+    function handleLikePost(evt) {
+        evt.preventDefault();
+        const data = {like: 1}
+        console.log(data)
+        const getToken = JSON.parse(localStorage.getItem('Token'));
+        const fetchUrl = 'http://localhost:4200/api/post/' + post._id + '/like'
+        fetch(fetchUrl, {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + getToken['token'],
+            },
+            body: JSON.stringify(data)
+        })
+            .then((res) => {console.log(res); res.json()})
+            .then(() => {
+                alert();
+                window.location.href = '/timeline'
+            })
+            .catch(() => {
+                alert('Une erreur est survenue, veuillez réessayer plus tard.')
+            })
+
+    }
+
     return (  
         <>
             <div key={post._id}>
@@ -64,8 +88,9 @@ export default function PostThread(props) {
                             </div>
                         </div>
                         <div>
+                            <p className={allowLike} onClick={(evt) => handleLikePost(evt)}>J'aime</p>
                             <p className={allowEdit} onClick={() => handleEditPost(post)}>Modifier</p>
-                            <p className={allowDelete}>Supprimer</p>
+                            <p className={allowDelete} onClick={() => handleDeletePost(post)}>Supprimer</p>
                         </div>
                     </div>
                 </div>

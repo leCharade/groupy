@@ -2,7 +2,7 @@ const Post = require('../models/post');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const dotenv = require('dotenv');
-// const fs = require('fs');
+const fs = require('fs');
 
 // Requête pour obtenir tous les posts
 exports.getAllPosts = (req, res, next) => {
@@ -56,6 +56,7 @@ exports.getOnePost = (req, res, next) => {
                                             posts.push({post, authorName});
                                             i++;
                                             if (listReplies.length <= i) {
+                                                posts.sort((a,b) => a.post.time - b.post.time);
                                                 res.status(200).json(posts);
                                             }
                                         })
@@ -75,11 +76,16 @@ exports.createPost = (req, res, next) => {
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const authorId = decodedToken.userId;
 
+    let image = ''
+    if (req.file) {
+        image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
+
     const post = new Post({
         userId: authorId,
         message: req.body.message,
         time: Date.now(),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: image,
         tag: req.body.tag,
         replies: 0,
         postReplies: [],
@@ -97,12 +103,16 @@ exports.replyPost = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const authorId = decodedToken.userId;
+    let image = ''
+    if (req.file) {
+        image = `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
+    }
 
     const post = new Post({
         userId: authorId,
         message: req.body.message,
         time: Date.now(),
-        imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+        imageUrl: image,
         likes: 0,
         usersLiked: [],
         replyTo: req.params.id
@@ -121,14 +131,189 @@ exports.replyPost = (req, res, next) => {
 }
 
 exports.modifyPost = (req, res, next) => {
-    const postObject = { ...req.body };
-    delete postObject._id;
-    delete postObject._userId;
-    delete postObject.replies;
-    delete postObject.postReplies;
-    delete postObject.likes;
-    delete postObject.usersLiked;
-    Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Post modifié!' }))
-        .catch(error => res.status(400).json({ error }));
+    console.log(req.body);
+    if (req.file) {
+        Post.findOne({ _id: req.params.id })
+            .then(post => {
+                // Suppression de l'image d'origine et ajout de la nouvelle image
+                const filename = post.imageUrl.split('/images/')[1];
+                fs.unlink(`images/${filename}`, () => {
+                    let postObject = [];
+                    if (post.replyTo === 'ORIGINAL') {
+                        postObject = {
+                            userId: post.userId,
+                            message: req.body.message,
+                            time: post.time,
+                            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                            tag: req.body.tag,
+                            replies: post.replies,
+                            postReplies: post.postReplies,
+                            likes: post.likes,
+                            usersLiked: post.usersLiked,
+                            replyTo: 'ORIGINAL'
+                        }
+                    }
+                    else {
+                        postObject = {
+                            userId: post.userId,
+                            message: req.body.message,
+                            time: post.time,
+                            imageUrl: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`,
+                            likes: post.likes,
+                            usersLiked: post.usersLiked,
+                            replyTo: req.params.id
+                        }
+                    }
+                    Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+                        .then(() => res.status(200).json({ message: 'Post modifié !' }))
+                        .catch(error => res.status(400).json({ error }));
+                })
+            })
+            .catch(error => res.status(500).json({ error }));
+    } else {
+        Post.findOne({ _id: req.params.id })
+            .then(post => {
+                let postObject = [];
+                if (post.replyTo === 'ORIGINAL') {
+                    postObject = {
+                        userId: post.userId,
+                        message: req.body.message,
+                        time: post.time,
+                        imageUrl: post.imageUrl,
+                        tag: req.body.tag,
+                        replies: post.replies,
+                        postReplies: post.postReplies,
+                        likes: post.likes,
+                        usersLiked: post.usersLiked,
+                        replyTo: 'ORIGINAL'
+                    }
+                }
+                else {
+                    postObject = {
+                        userId: post.userId,
+                        message: req.body.message,
+                        time: post.time,
+                        imageUrl: post.imageUrl,
+                        likes: post.likes,
+                        usersLiked: post.usersLiked,
+                        replyTo: req.params.id
+                    }
+                }
+                Post.updateOne({ _id: req.params.id }, { ...postObject, _id: req.params.id })
+                    .then(() => res.status(200).json({ message: 'Post modifié !' }))
+                    .catch(error => res.status(400).json({ error }));
+            })
+    }
+};
+
+exports.deletePost = (req, res, next) => {
+    Post.findOne({ _id: req.params.id})
+        .then(deletedPost => {
+            if (deletedPost.replyTo === 'ORIGINAL') {
+                let i = 0;
+                const listReplies = deletedPost.postReplies;
+                if (listReplies.length > 0) {
+                    for (reply of listReplies) {
+                        const replyId = reply.toHexString();
+                        Post.findOne({_id: replyId})
+                            .then(replyToDelete => {
+                                if (replyToDelete.imageUrl !== '') {
+                                    const filename = replyToDelete.imageUrl.split('/images/')[1];
+                                    fs.unlink(`images/${filename}`, () => {
+                                        Post.deleteOne({_id: replyId})
+                                        })
+                                }
+                                else {
+                                    Post.deleteOne({_id: replyId})
+                                }
+                                i++;
+                                if (listReplies.length <= i) {
+                                    if (deletedPost.imageUrl !== '') {
+                                        const filename = deletedPost.imageUrl.split('/images/')[1];
+                                        fs.unlink(`images/${filename}`, () => {
+                                            Post.deleteOne({_id: req.params.id})
+                                                .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                                                .catch(error => res.status(401).json({error}));
+                                        })
+                                    }
+                                    else {
+                                        Post.deleteOne({_id: req.params.id})
+                                            .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                                            .catch(error => res.status(401).json({error}));
+                                    }
+                                }
+                            })
+                            .catch(error => req.status(500).json({error}));
+                    }
+                }
+            }
+            else {
+                if (deletedPost.imageUrl !== '') {
+                    const filename = deletedPost.imageUrl.split('/images/')[1];
+                    fs.unlink(`images/${filename}`, () => {
+                        Post.updateOne({ _id: deletedPost.replyTo }, { 
+                            $pull: { postReplies: deletedPost._id },
+                            $inc: { replies: -1 },
+                        })
+                            .then(() => {
+                                Post.deleteOne({_id: req.params.id})
+                                    .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                                    .catch(error => res.status(401).json({error}));
+                            })
+                            .catch(error => res.status(401).json({error}));
+                        })
+                }
+                else {
+                    Post.updateOne({ _id: deletedPost.replyTo }, { 
+                        $pull: { postReplies: deletedPost._id },
+                        $inc: { replies: -1 },
+                    })
+                        .then(() => {
+                            Post.deleteOne({_id: req.params.id})
+                                .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                                .catch(error => res.status(401).json({error}));
+                        })
+                        .catch(error => res.status(401).json({error}));
+                }
+            }
+        })
+        .catch(error => req.status(500).json({error}));
 }
+
+exports.likePost = (req, res, next) => {
+    console.log('on est là', req.body.like, req.body, req.params.id)
+    const postId = req.params.id;
+    const token = req.headers.authorization.split(' ')[1];
+    const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decodedToken.userId;
+    const like = req.body.like;
+    // Si l'utilisateur a cliqué sur Like, on like le post
+    if (like === 1) {
+      Post.updateOne(
+        { _id: postId },
+        {
+          $inc: { likes: like },
+          $push: { usersLiked: userId },
+        }
+      )
+        .then(() => res.status(200).json({ message: "Post liké !" }))
+        .catch((error) => res.status(500).json({ error }));
+    }
+    else {
+      Post.findOne({ _id: postId })
+        .then((post) => {
+            // Si l'utilisateur a retiré son like, on décrémente le compte de likes
+            if (post.usersLiked.includes(userId)) {
+                Post.updateOne(
+                { _id: postId },
+                { $pull: { usersLiked: userId }, $inc: { likes: -1 } }
+                )
+                .then(() => {
+                    res.status(200).json({ message: "Like retiré !" });
+                })
+                .catch((error) => res.status(500).json({ error }));
+            }
+        })
+        .catch((error) => res.status(401).json({ error }));
+    }
+};
