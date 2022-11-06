@@ -221,10 +221,12 @@ exports.deletePost = (req, res, next) => {
                                     const filename = replyToDelete.imageUrl.split('/images/')[1];
                                     fs.unlink(`images/${filename}`, () => {
                                         Post.deleteOne({_id: replyId})
+                                            .then(() => console.log('Post supprimé.'))
                                         })
                                 }
                                 else {
                                     Post.deleteOne({_id: replyId})
+                                        .then(() => console.log('Post supprimé.'))
                                 }
                                 i++;
                                 if (listReplies.length <= i) {
