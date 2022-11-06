@@ -19,6 +19,7 @@ export default function DeletePost(props) {
         })
             .then((res) => {console.log(res); res.json()})
             .then(() => {
+                alert();
                 window.location.href = '/timeline';
             })
             .catch(() => {

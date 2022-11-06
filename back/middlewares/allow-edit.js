@@ -2,7 +2,7 @@
 const jwt = require('jsonwebtoken');
 const Post = require('../models/post');
 const dotenv = require('dotenv');
-const user = require('../models/user');
+const User = require('../models/user');
 
 // Récupération des données dotenv
 dotenv.config();
@@ -17,8 +17,10 @@ module.exports = (req, res, next) => {
                 next();
             }
             else {
+                console.log('on est là')
                 User.findOne({ _id: userId })
-                    .then (user => {
+                    .then(user => {
+                        console.log(user);
                         if (user.rank === 1) {
                             next();
                         }

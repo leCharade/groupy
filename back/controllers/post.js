@@ -211,8 +211,8 @@ exports.deletePost = (req, res, next) => {
         .then(deletedPost => {
             if (deletedPost.replyTo === 'ORIGINAL') {
                 let i = 0;
-                const listReplies = deletedPost.postReplies;
-                if (listReplies.length > 0) {
+                if (deletedPost.replies > 0) {
+                    const listReplies = deletedPost.postReplies;
                     for (reply of listReplies) {
                         const replyId = reply.toHexString();
                         Post.findOne({_id: replyId})
@@ -246,6 +246,21 @@ exports.deletePost = (req, res, next) => {
                                 }
                             })
                             .catch(error => req.status(500).json({error}));
+                    }
+                }
+                else {
+                    if (deletedPost.imageUrl !== '') {
+                        const filename = deletedPost.imageUrl.split('/images/')[1];
+                        fs.unlink(`images/${filename}`, () => {
+                            Post.deleteOne({_id: req.params.id})
+                                .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                                .catch(error => res.status(401).json({error}));
+                        })
+                    }
+                    else {
+                        Post.deleteOne({_id: req.params.id})
+                            .then(() => res.status(200).json({message : 'Post supprimé !'}))
+                            .catch(error => res.status(401).json({error}));
                     }
                 }
             }
