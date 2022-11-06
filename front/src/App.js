@@ -43,7 +43,7 @@ function App() {
           <Route path="/timeline" element={<Timeline handleSelectPost={handleSelectPost}/>} />
           <Route path="/new" element={<AddPost />} />
           <Route path="/settings" element={<Settings />} />
-          <Route path="/post.html" element={<Post post={post}/>}/>
+          <Route path="/post" element={<Post post={post}/>}/>
         </Routes>
       </>
     )

@@ -19,7 +19,6 @@ export default function DeletePost(props) {
         })
             .then((res) => {console.log(res); res.json()})
             .then(() => {
-                alert();
                 window.location.href = '/timeline';
             })
             .catch(() => {
@@ -34,10 +33,10 @@ export default function DeletePost(props) {
                 </div>
                 <div className="post-edit">
                     <h1>Souhaitez-vous vraiment effacer ce message ?</h1>
-                    <div>
+                    <div className="validateOrAbort">
                         <form onSubmit={(evt) => handleSubmit(evt)}>
                             <input className="btn" type="submit" value="Envoyer" />
-                            <div className="btn" onClick={() => handleDisableDeletePost()}>Annuler</div>
+                            <div className="btn btn--cancel" onClick={() => handleDisableDeletePost()}>Annuler</div>
                         </form>
                     </div>
                 </div>

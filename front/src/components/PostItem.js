@@ -7,11 +7,6 @@ export default function PostItem(props) {
 
     const { post, author, handleSelectPost } = props;
 
-    const userId = JSON.parse(localStorage.getItem('Token')).userId;
-    const rank = JSON.parse(localStorage.getItem('Token')).rank;
-    let allowEdit = 'post__actions__edit';
-    let allowDelete = 'post__actions__delete'
-    let allowLike = 'post__actions__like';
     let showTag = 'post__tag'
 
     if (post.tag !== "") {
@@ -25,6 +20,8 @@ export default function PostItem(props) {
     const day = timePost.getDate().toString().padStart(2, "0");
     const hour = timePost.getHours().toString().padStart(2, "0");
     const minute = timePost.getMinutes().toString().padStart(2, "0");
+
+    const postUrl = "/post?id=" + post._id;
 
     return (  
         <div key={post._id}>
@@ -49,7 +46,7 @@ export default function PostItem(props) {
                         <p className="post__actions__number-replies">{post.replies}</p>
                     </div>
                     <div>
-                        <NavLink to="/post.html" className="showthread" post={post} onClick={() => handleSelectPost(post)}>Voir la discussion</NavLink>
+                        <NavLink to={postUrl} className="showthread" post={post} onClick={() => handleSelectPost(post)}>Voir la discussion</NavLink>
                     </div>
                 </div>
             </div>

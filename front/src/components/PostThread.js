@@ -63,6 +63,12 @@ export default function PostThread(props) {
             body: JSON.stringify(data)
         })
             .then((res) => res.json())
+            .then(() => {
+                const url = new URL(window.location.href);
+                const postId = url.searchParams.get("id");
+                const postUrl = "/post?id=" + postId;
+                window.location.href = postUrl;
+            })
             .catch(() => {
                 alert('Une erreur est survenue, veuillez réessayer plus tard.')
             })
@@ -94,7 +100,7 @@ export default function PostThread(props) {
                                 <p className="post__actions__number-replies">{post.replies}</p>
                             </div>
                         </div>
-                        <div>
+                        <div className="post__actions__bar">
                             <p className={allowLike} onClick={(evt) => handleLikePost(evt)}>{likeOption}</p>
                             <p className={allowEdit} onClick={() => handleEditPost(post)}>Modifier</p>
                             <p className={allowDelete} onClick={() => handleDeletePost(post)}>Supprimer</p>

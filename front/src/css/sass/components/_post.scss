@@ -95,7 +95,19 @@
         & .display {
             display:flex;
         }
-        
+        &__bar {
+            color:$color-primary;
+            font-weight:bold;
+            text-decoration:none;
+            padding:2px 6px;
+            border-radius:20px;
+            background-color:$color-secondary;
+            border:1px solid $color-secondary;
+            & p:hover {
+                color:black;
+                cursor:pointer;
+            }
+        }
     }
     & .showthread {
         color:$color-primary;

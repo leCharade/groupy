@@ -82,8 +82,10 @@ export default function EditPost(props) {
                             <br />
                             <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
                             <br />
-                            <input className="btn" type="submit" value="Envoyer" />
-                            <div className="btn" onClick={() => handleDisableEditPost()}>Annuler</div>
+                            <div className="validateOrAbort">
+                                <input className="btn" type="submit" value="Envoyer" />
+                                <div className="btn btn--cancel" onClick={() => handleDisableEditPost()}>Annuler</div>
+                            </div>
                         </form>
                     </div>
                 </div>

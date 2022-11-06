@@ -19,7 +19,15 @@ export default function Post(props) {
     const [deletePost, setDeletePost] = useState({postId:''})
 
     const getToken = JSON.parse(localStorage.getItem('Token'));
-    const fetchUrl = 'http://localhost:4200/api/post/' + post._id;
+    let fetchUrl = ''
+    if (post === undefined) {
+        const url = new URL(window.location.href);
+        const postId = url.searchParams.get("id");
+        fetchUrl = 'http://localhost:4200/api/post/' + postId;
+    }
+    else {
+        fetchUrl = 'http://localhost:4200/api/post/' + post._id;
+    }
 
     useEffect(() => {
         fetch(fetchUrl, {
@@ -88,7 +96,7 @@ export default function Post(props) {
     
     
         return (
-            <>
+            <div className="postpage">
                 <div className="timeline">
                     {
                         posts.map(post => (
@@ -108,13 +116,13 @@ export default function Post(props) {
                             <br />
                             <label htmlFor="file">Sélectionnez une image :</label>
                             <br />
-                            <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
+                            <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={reply.image} onChange={(evt) => handleFileChange(evt)}></input>
                             <br />
                             <input className="btn" type="submit" value="Envoyer" />
                         </form>
                     </div>
                 </div>
-            </>
+            </div>
         )
 }
 
