@@ -31,14 +31,14 @@ export default function DeletePost(props) {
             <>
                 <div className="greybackground">
                 </div>
-                <div className="post-edit">
+                <div className="post-edit post-edit--delete">
                     <h1>Souhaitez-vous vraiment effacer ce message ?</h1>
-                    <div className="validateOrAbort">
-                        <form onSubmit={(evt) => handleSubmit(evt)}>
-                            <input className="btn" type="submit" value="Envoyer" />
+                    <form onSubmit={(evt) => handleSubmit(evt)}>
+                        <div className="validateOrAbort">
+                            <input className="btn" type="submit" value="Supprimer" />
                             <div className="btn btn--cancel" onClick={() => handleDisableDeletePost()}>Annuler</div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </>
         )

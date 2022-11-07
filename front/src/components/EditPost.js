@@ -62,7 +62,7 @@ export default function EditPost(props) {
                 <div className="greybackground">
                 </div>
                 <div className="post-edit">
-                    <h1>Nouveau message</h1>
+                    <h1>Éditer le message</h1>
                     <div>
                         <form onSubmit={(evt) => handleSubmit(evt)}>
                             <label htmlFor="message">Écrivez votre message :</label>
@@ -72,7 +72,7 @@ export default function EditPost(props) {
                             <label htmlFor="tag" className={showTag}>Choisissez un tag :</label>
                             <br className={showTag} />
                             <select name="tag" id="tag" className={showTag} value={post.tag} onChange={(evt) => handleChange(evt)}>
-                                <option value="none">(sélectionnez un tag)</option>
+                                <option value="">(sélectionnez un tag)</option>
                                 <option value="Work">Work</option>
                                 <option value="Tech">Tech</option>
                                 <option value="RH">RH</option>
@@ -83,7 +83,7 @@ export default function EditPost(props) {
                             <input type="file" id="image" name="image" accept="image/png, image/jpeg" value={post.image} onChange={(evt) => handleFileChange(evt)}></input>
                             <br />
                             <div className="validateOrAbort">
-                                <input className="btn" type="submit" value="Envoyer" />
+                                <input className="btn" type="submit" value="Modifier" />
                                 <div className="btn btn--cancel" onClick={() => handleDisableEditPost()}>Annuler</div>
                             </div>
                         </form>

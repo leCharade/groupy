@@ -1,6 +1,13 @@
 .post-add {
     padding:20px;
     width:35%;
+    @include mobile-only {
+        padding:10px;
+        width:90%;
+        & h1 {
+            font-size:20px;
+        }
+    }
 }
 
 select {
@@ -11,6 +18,10 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing:border-box;
+    @include mobile-only {
+        padding:10px;
+        width:100%;
+    }
 }
 
 textarea {
@@ -22,4 +33,8 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing:border-box;
+    @include mobile-only {
+        padding:10px;
+        width:100%;
+    }
 }

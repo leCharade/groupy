@@ -1,3 +1,9 @@
 .timeline {
     padding:20px;
+    @include mobile-only {
+        padding:10px;
+        & h1 {
+            font-size:20px;
+        }
+    }
 }

@@ -58,7 +58,7 @@ export default function AddPost() {
                     <label htmlFor="tag">Choisissez un tag :</label>
                     <br />
                     <select name="tag" id="tag" value={post.tag} onChange={(evt) => handleChange(evt)}>
-                        <option value="none">(sélectionnez un tag)</option>
+                        <option value="">(sélectionnez un tag)</option>
                         <option value="Work">Work</option>
                         <option value="Tech">Tech</option>
                         <option value="RH">RH</option>

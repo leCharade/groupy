@@ -13,6 +13,12 @@ body {
   display: block;
   margin: 40px auto;
 }
+@media screen and (max-width: 768px) {
+  .logo {
+    width: 90%;
+    margin: 20px auto;
+  }
+}
 
 .welcome {
   display: flex;
@@ -24,6 +30,12 @@ body {
   border-radius: 15px;
   border: #FFD7D7 solid 2px;
 }
+@media screen and (max-width: 768px) {
+  .welcome {
+    width: 90%;
+    margin: auto;
+  }
+}
 .welcome__title {
   width: 100%;
   text-align: center;
@@ -31,19 +43,44 @@ body {
   margin: auto;
   color: #4E5166;
 }
+@media screen and (max-width: 768px) {
+  .welcome__title {
+    width: 90%;
+    margin: auto;
+    font-size: 15px;
+  }
+}
 .welcome__verticalbar {
   width: 2px;
   height: 300px;
   background-color: #FD2D01;
 }
+@media screen and (max-width: 768px) {
+  .welcome__verticalbar {
+    width: 90%;
+    height: 2px;
+    margin: 10px auto;
+  }
+}
 .welcome__form {
   width: 40%;
+}
+@media screen and (max-width: 768px) {
+  .welcome__form {
+    width: 90%;
+    margin: auto;
+  }
 }
 .welcome__form h2 {
   margin: auto;
   width: fit-content;
   color: #4E5166;
   padding-bottom: 2%;
+}
+@media screen and (max-width: 768px) {
+  .welcome__form h2 {
+    font-size: 17px;
+  }
 }
 .welcome__form form {
   margin: auto;
@@ -54,6 +91,11 @@ body {
   flex-direction: column;
   justify-content: space-around;
 }
+@media screen and (max-width: 768px) {
+  .welcome__form form {
+    height: fit-content;
+  }
+}
 .welcome__form form input {
   width: 30vw;
   height: 40px;
@@ -62,21 +104,45 @@ body {
   border-radius: 20px;
   border: #4E5166 solid 1px;
 }
+@media screen and (max-width: 768px) {
+  .welcome__form form input {
+    width: 70vw;
+    margin: 7px;
+  }
+}
 
 .timeline {
   padding: 20px;
 }
+@media screen and (max-width: 768px) {
+  .timeline {
+    padding: 10px;
+  }
+  .timeline h1 {
+    font-size: 20px;
+  }
+}
 
 .postpage {
   display: flex;
+  flex-wrap: wrap-reverse;
 }
 .postpage .timeline {
-  width: 60%;
+  width: 100%;
 }
 
 .post-add {
   padding: 20px;
   width: 35%;
+}
+@media screen and (max-width: 768px) {
+  .post-add {
+    padding: 10px;
+    width: 90%;
+  }
+  .post-add h1 {
+    font-size: 20px;
+  }
 }
 
 select {
@@ -87,6 +153,12 @@ select {
   border: 1px solid #ccc;
   border-radius: 4px;
   box-sizing: border-box;
+}
+@media screen and (max-width: 768px) {
+  select {
+    padding: 10px;
+    width: 100%;
+  }
 }
 
 textarea {
@@ -99,6 +171,12 @@ textarea {
   border-radius: 4px;
   box-sizing: border-box;
 }
+@media screen and (max-width: 768px) {
+  textarea {
+    padding: 10px;
+    width: 100%;
+  }
+}
 
 .post-edit {
   width: 60%;
@@ -110,6 +188,20 @@ textarea {
   border-radius: 30px;
   z-index: 3;
   background-color: #FFD7D7;
+}
+@media screen and (max-width: 768px) {
+  .post-edit {
+    top: 15%;
+    right: 5%;
+    width: 90%;
+    padding: 20px;
+  }
+  .post-edit--delete {
+    top: 34%;
+  }
+  .post-edit h1 {
+    font-size: 20px;
+  }
 }
 
 .editclick {
@@ -141,9 +233,23 @@ textarea {
   margin: 20px auto 0px auto;
   justify-content: space-between;
 }
+@media screen and (max-width: 768px) {
+  .validateOrAbort {
+    width: 80%;
+    margin: 10px auto 0px auto;
+  }
+}
 
 .settings {
   padding: 20px;
+}
+@media screen and (max-width: 768px) {
+  .settings {
+    padding: 10px;
+  }
+  .settings h1 {
+    font-size: 20px;
+  }
 }
 
 .menu {
@@ -157,12 +263,19 @@ textarea {
   font-weight: bold;
   color: #FD2D01;
 }
+@media screen and (max-width: 768px) {
+  .menu {
+    font-size: 14px;
+  }
+}
 
 ul {
   list-style: none;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: space-around;
+  position: relative;
+  left: -20px;
 }
 
 .post {
@@ -175,6 +288,13 @@ ul {
   font-size: 14px;
   text-decoration: none;
   background-color: #fff;
+}
+@media screen and (max-width: 768px) {
+  .post {
+    width: 90%;
+    margin: 15px auto;
+    font-size: 13px;
+  }
 }
 .post__header {
   display: flex;
@@ -189,6 +309,11 @@ ul {
   font-size: 17px;
   color: #4E5166;
   margin: 0;
+}
+@media screen and (max-width: 768px) {
+  .post__author {
+    font-size: 14px;
+  }
 }
 .post__tag {
   display: none;
@@ -206,6 +331,11 @@ ul {
   padding: 4px 6px;
   justify-items: right;
 }
+@media screen and (max-width: 768px) {
+  .post__tag--show {
+    font-size: 13px;
+  }
+}
 .post__tag--show p {
   margin: 0px 4px;
 }
@@ -221,6 +351,11 @@ ul {
   color: #000;
   margin: 12px 0 6px 0;
   justify-content: space-between;
+}
+@media screen and (max-width: 768px) {
+  .post__actions {
+    flex-wrap: wrap;
+  }
 }
 .post__actions div {
   display: flex;
@@ -277,6 +412,11 @@ ul {
   color: black;
   cursor: pointer;
 }
+@media screen and (max-width: 768px) {
+  .post__actions__bar {
+    margin: 10px auto 0px auto;
+  }
+}
 .post .showthread {
   color: #FD2D01;
   font-weight: bold;
@@ -285,6 +425,13 @@ ul {
   border-radius: 20px;
   background-color: #FFD7D7;
   border: 1px solid #FFD7D7;
+}
+@media screen and (max-width: 768px) {
+  .post .showthread {
+    position: relative;
+    left: 150px;
+    top: 10px;
+  }
 }
 .post .showthread:hover {
   color: white;
@@ -303,6 +450,13 @@ ul {
   border-radius: 20px;
   align-self: center;
 }
+@media screen and (max-width: 768px) {
+  .btn {
+    margin: 15px auto;
+    width: 42%;
+    padding: 6px 0px 8px 0px;
+  }
+}
 .btn--cancel {
-  padding: 8px 56px;
+  padding: 9px 0px 8px 26px;
 }

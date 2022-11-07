@@ -8,11 +8,16 @@
         font-weight:bold;
         color:$color-primary;
     }
+    @include mobile-only {
+        font-size:14px;
+    }
 }
 
 ul {
     list-style: none;
     display:flex;
     flex-direction:row;
-    justify-content:space-between;
+    justify-content:space-around;
+    position:relative;
+    left:-20px;
 }

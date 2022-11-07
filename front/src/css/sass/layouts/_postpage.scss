@@ -1,6 +1,7 @@
 .postpage {
     display:flex;
+    flex-wrap:wrap-reverse;
     & .timeline {
-        width:60%;
+        width:100%;
     }
 }

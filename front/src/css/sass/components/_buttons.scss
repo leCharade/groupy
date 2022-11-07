@@ -8,7 +8,12 @@
     height:40px;
     border-radius:20px;
     align-self:center;
+    @include mobile-only {
+        margin:15px auto;
+        width:42%;
+        padding:6px 0px 8px 0px;
+    }
     &--cancel {
-        padding:8px 56px;
+        padding:9px 0px 8px 26px;
     }
 }
