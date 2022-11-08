@@ -62,10 +62,7 @@ export default function PostThread(props) {
         })
             .then((res) => res.json())
             .then(() => {
-                const url = new URL(window.location.href);
-                const postId = url.searchParams.get("id");
-                const postUrl = "/post?id=" + postId;
-                window.location.href = postUrl;
+                window.location.reload(false);
             })
             .catch(() => {
                 alert('Une erreur est survenue, veuillez réessayer plus tard.')
