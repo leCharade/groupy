@@ -50,7 +50,6 @@ export default function PostThread(props) {
 
     function handleLikePost(evt) {
         evt.preventDefault();
-        const data = {like: findLike}
         const getToken = JSON.parse(localStorage.getItem('Token'));
         const fetchUrl = 'http://localhost:4200/api/post/' + post._id + '/like'
         fetch(fetchUrl, {
@@ -59,8 +58,7 @@ export default function PostThread(props) {
                 'Authorization': 'Bearer ' + getToken['token'],
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
-            },
-            body: JSON.stringify(data)
+            }
         })
             .then((res) => res.json())
             .then(() => {

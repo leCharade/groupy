@@ -302,34 +302,38 @@ exports.likePost = (req, res, next) => {
     const token = req.headers.authorization.split(' ')[1];
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decodedToken.userId;
-    const like = req.body.like;
-    // Si l'utilisateur a cliqué sur Like, on like le post
-    if (like === false) {
-      Post.updateOne(
-        { _id: postId },
-        {
-          $inc: { likes: 1 },
-          $push: { usersLiked: userId },
-        }
-      )
-        .then(() => res.status(200).json({ message: "Post liké !" }))
-        .catch((error) => res.status(500).json({ error }));
-    }
-    else {
-      Post.findOne({ _id: postId })
-        .then((post) => {
-            // Si l'utilisateur a retiré son like, on décrémente le compte de likes
-            if (post.usersLiked.includes(userId)) {
+    let like = false;
+    Post.findOne({_id: postId})
+        .then(post => {
+            like = post.usersLiked.includes(userId)
+            // Si l'utilisateur a cliqué sur Like, on like le post
+            if (like === false) {
                 Post.updateOne(
                 { _id: postId },
-                { $pull: { usersLiked: userId }, $inc: { likes: -1 } }
+                {
+                    $inc: { likes: 1 },
+                    $push: { usersLiked: userId },
+                }
                 )
-                .then(() => {
-                    res.status(200).json({ message: "Like retiré !" });
-                })
+                .then(() => res.status(200).json({ message: "Post liké !" }))
                 .catch((error) => res.status(500).json({ error }));
             }
-        })
-        .catch((error) => res.status(401).json({ error }));
-    }
+            else if (like === true) {
+                Post.findOne({ _id: postId })
+                .then((post) => {
+                    // Si l'utilisateur a retiré son like, on décrémente le compte de likes
+                    if (post.usersLiked.includes(userId)) {
+                        Post.updateOne(
+                        { _id: postId },
+                        { $pull: { usersLiked: userId }, $inc: { likes: -1 } }
+                        )
+                        .then(() => {
+                            res.status(200).json({ message: "Like retiré !" });
+                        })
+                        .catch((error) => res.status(500).json({ error }));
+                    }
+                })
+                .catch((error) => res.status(401).json({ error }));
+            }
+        })        
 };
