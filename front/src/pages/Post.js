@@ -38,7 +38,13 @@ export default function Post(props) {
             'Accept': 'application/json',
             }
         })
-            .then((res) => res.json())
+            .then((res) => {
+                if(res.status === 401)
+                {
+                    localStorage.clear();
+                }
+                res.json()
+            })
             .then((data) => {
                 setPosts(data);
             })

@@ -6,7 +6,7 @@ export default function Settings() {
         evt.preventDefault();
 
         localStorage.clear();
-        window.location.href = 'welcome.html'
+        window.location.href = ''
     }
 
     return (

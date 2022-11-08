@@ -20,6 +20,7 @@ export default function Timeline(props) {
             .then((data) => {
                 setPosts(data);
             })
+            .catch()
     }, [])
     
             return (

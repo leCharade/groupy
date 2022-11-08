@@ -26,12 +26,6 @@ exports.signup = (req, res, next) => {
                     process.env.JWT_SECRET,
                     { expiresIn: '24h' }
                     )
-                // const xsrfToken = crypto.randomBytes(64).toString('hex');
-                // res.cookie('access_token', accessToken, {
-                //     httpOnly: true,
-                //     secure: true,
-                //     maxAge: accessToken.expiresIn
-                // });
                 user.save()
                     .then(() => res.status(201).json({      
                             userId: user._id,

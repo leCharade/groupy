@@ -11,6 +11,7 @@ const MIME_TYPES = {
 const storage = multer.diskStorage({
     destination: (req, file, callback) => {
         const fileSize = parseInt(req.headers["content-length"]) 
+        // Image filtrée en fonction du format (.jpg ou .png autorisés) et si la taille est inférieure à 2 Mo.
         if ((file.mimetype !== 'image/jpg' && file.mimetype !== 'image/jpeg' && file.mimetype !== 'image/png') || fileSize > 2097152) {
             return callback(new Error('Votre image doit être au format .jpg ou .png et peser moins de 2 Mo.'));
         }
