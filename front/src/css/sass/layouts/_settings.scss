@@ -1,5 +1,7 @@
 .settings {
     padding:20px;
+    width:fit-content;
+    margin:auto;
     @include mobile-only {
         padding:10px;
         & h1 {

@@ -134,11 +134,6 @@
         border-radius:20px;
         background-color:$color-secondary;
         border:1px solid $color-secondary;
-        @include mobile-only {
-            position:relative;
-            left:150px;
-            top:10px;
-        }
         &:hover {
             color:white;
             background-color:$color-primary;

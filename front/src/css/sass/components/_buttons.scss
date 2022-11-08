@@ -8,12 +8,28 @@
     height:40px;
     border-radius:20px;
     align-self:center;
+    margin:15px auto;
     @include mobile-only {
-        margin:15px auto;
         width:42%;
         padding:6px 0px 8px 0px;
     }
     &--cancel {
-        padding:9px 0px 8px 26px;
+        padding-bottom:4px;
+        justify-content: center;
+        & p {
+            margin:8px auto;
+            width:fit-content;
+            @include mobile-only {
+                margin:3px auto;
+            }
+        }
+    }
+    &--logoff {
+        width:50%;
+        margin-left:25%;
+        @include mobile-only {
+            width:80%;
+            margin-left:10%;
+        }
     }
 }

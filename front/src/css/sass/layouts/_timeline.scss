@@ -1,5 +1,9 @@
 .timeline {
     padding:20px;
+    & h1 {
+        width:fit-content;
+        margin:auto;
+    }
     @include mobile-only {
         padding:10px;
         & h1 {

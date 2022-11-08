@@ -36,7 +36,7 @@ export default function DeletePost(props) {
                     <form onSubmit={(evt) => handleSubmit(evt)}>
                         <div className="validateOrAbort">
                             <input className="btn" type="submit" value="Supprimer" />
-                            <div className="btn btn--cancel" onClick={() => handleDisableDeletePost()}>Annuler</div>
+                            <div className="btn btn--cancel" onClick={() => handleDisableDeletePost()}><p>Annuler</p></div>
                         </div>
                     </form>
                 </div>

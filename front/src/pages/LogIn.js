@@ -22,8 +22,14 @@ export default function LogIn() {
 
     .then((res) => res.json())
     .then((loginInfos) => {
-        localStorage.setItem('Token', JSON.stringify(loginInfos))
-        window.location.href = '/timeline';
+        if (loginInfos.message === "Paire identifiant/mot de passe incorrecte.")
+        {
+            alert('Paire identifiant/mot de passe incorrecte.')
+        }
+        else {
+            localStorage.setItem('Token', JSON.stringify(loginInfos))
+            window.location.href = '/timeline';
+        }
     })
     .catch(() => {
         alert('Une erreur est survenue, veuillez réessayer plus tard.')

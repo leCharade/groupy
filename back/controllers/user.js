@@ -41,7 +41,7 @@ exports.signup = (req, res, next) => {
                     .catch(error => res.status(400).json({ error }));
             }
             else {
-                res.status(401).json({ message: 'Entrez une adresse email valable (format exemple@piiquante.com).'});
+                res.status(401).json({ message: 'Entrez une adresse email valable (format exemple@groupomania.com).'});
             }
             
         })
@@ -60,11 +60,6 @@ exports.login = (req, res, next) => {
                         if (!valid) {
                             res.status(401).json({ message: 'Paire identifiant/mot de passe incorrecte.'})
                         } else {
-                            // const token = jwt.sign(
-                            //     { userId: user._id },
-                            //     process.env.JWT_SECRET,
-                            //     { expiresIn: '24h' }
-                            // )
                             const accessToken = jwt.sign(
                                 { userId: user._id },
                                 process.env.JWT_SECRET,

@@ -114,6 +114,10 @@ body {
 .timeline {
   padding: 20px;
 }
+.timeline h1 {
+  width: fit-content;
+  margin: auto;
+}
 @media screen and (max-width: 768px) {
   .timeline {
     padding: 10px;
@@ -125,7 +129,11 @@ body {
 
 .postpage {
   display: flex;
-  flex-wrap: wrap-reverse;
+}
+@media screen and (max-width: 768px) {
+  .postpage {
+    flex-wrap: wrap-reverse;
+  }
 }
 .postpage .timeline {
   width: 100%;
@@ -133,7 +141,8 @@ body {
 
 .post-add {
   padding: 20px;
-  width: 35%;
+  width: 50%;
+  margin: auto;
 }
 @media screen and (max-width: 768px) {
   .post-add {
@@ -146,7 +155,7 @@ body {
 }
 
 select {
-  width: 30%;
+  width: 50%;
   padding: 12px 20px;
   margin: 8px 0;
   display: inline-block;
@@ -242,6 +251,8 @@ textarea {
 
 .settings {
   padding: 20px;
+  width: fit-content;
+  margin: auto;
 }
 @media screen and (max-width: 768px) {
   .settings {
@@ -426,13 +437,6 @@ ul {
   background-color: #FFD7D7;
   border: 1px solid #FFD7D7;
 }
-@media screen and (max-width: 768px) {
-  .post .showthread {
-    position: relative;
-    left: 150px;
-    top: 10px;
-  }
-}
 .post .showthread:hover {
   color: white;
   background-color: #FD2D01;
@@ -449,14 +453,34 @@ ul {
   height: 40px;
   border-radius: 20px;
   align-self: center;
+  margin: 15px auto;
 }
 @media screen and (max-width: 768px) {
   .btn {
-    margin: 15px auto;
     width: 42%;
     padding: 6px 0px 8px 0px;
   }
 }
 .btn--cancel {
-  padding: 9px 0px 8px 26px;
+  padding-bottom: 4px;
+  justify-content: center;
+}
+.btn--cancel p {
+  margin: 8px auto;
+  width: fit-content;
+}
+@media screen and (max-width: 768px) {
+  .btn--cancel p {
+    margin: 3px auto;
+  }
+}
+.btn--logoff {
+  width: 50%;
+  margin-left: 25%;
+}
+@media screen and (max-width: 768px) {
+  .btn--logoff {
+    width: 80%;
+    margin-left: 10%;
+  }
 }

@@ -30,7 +30,6 @@ export default function EditPost(props) {
         })
             .then((res) => {console.log(res); res.json()})
             .then(() => {
-                alert();
                 setPost({
                     message: '',
                     tag: '',
@@ -84,7 +83,7 @@ export default function EditPost(props) {
                             <br />
                             <div className="validateOrAbort">
                                 <input className="btn" type="submit" value="Modifier" />
-                                <div className="btn btn--cancel" onClick={() => handleDisableEditPost()}>Annuler</div>
+                                <div className="btn btn--cancel" onClick={() => handleDisableEditPost()}><p>Annuler</p></div>
                             </div>
                         </form>
                     </div>

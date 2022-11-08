@@ -23,8 +23,13 @@ export default function SignUp() {
     
             .then((res) => res.json())
             .then((loginInfos) => {
-                localStorage.setItem('Token', JSON.stringify(loginInfos))
-                window.location.href = '/timeline';
+                if (loginInfos.message === "Votre mot de passe doit comporter au moins 8 caractères dont au moins une lettre majuscule, une lettre minuscule et un chiffre !") {
+                    alert('Votre mot de passe doit comporter au moins 8 caractères dont au moins une lettre majuscule, une lettre minuscule et un chiffre.');
+                }
+                else {
+                    localStorage.setItem('Token', JSON.stringify(loginInfos))
+                    window.location.href = '/timeline';
+                }
             })
             .catch(() => {
                 alert('Une erreur est survenue, veuillez réessayer plus tard.')

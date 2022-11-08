@@ -1,7 +1,10 @@
 .postpage {
     display:flex;
-    flex-wrap:wrap-reverse;
+    @include mobile-only {
+        flex-wrap:wrap-reverse;
+    }
     & .timeline {
         width:100%;
+        
     }
 }
