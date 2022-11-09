@@ -27,7 +27,9 @@ export default function LogIn() {
             alert('Paire identifiant/mot de passe incorrecte.')
         }
         else {
-            localStorage.setItem('Token', JSON.stringify(loginInfos))
+            document.cookie = "token=" + loginInfos.token;
+            document.cookie = "userId=" + loginInfos.userId;
+            document.cookie = "rank=" + loginInfos.rank;
             window.location.href = '/timeline';
         }
     })

@@ -27,7 +27,9 @@ export default function SignUp() {
                     alert('Votre mot de passe doit comporter au moins 8 caractères dont au moins une lettre majuscule, une lettre minuscule et un chiffre.');
                 }
                 else {
-                    localStorage.setItem('Token', JSON.stringify(loginInfos))
+                    document.cookie = "token=" + loginInfos.token;
+                    document.cookie = "userId=" + loginInfos.userId;
+                    document.cookie = "rank=" + loginInfos.rank;
                     window.location.href = '/timeline';
                 }
             })

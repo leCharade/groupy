@@ -6,13 +6,29 @@ export default function PostThread(props) {
 
     const { post, author, handleEditPost, handleDeletePost } = props;
 
-    const userId = JSON.parse(localStorage.getItem('Token')).userId;
-    const rank = JSON.parse(localStorage.getItem('Token')).rank;
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+
+    const userId = getCookie("userId");
+    const rank = getCookie("rank");
     let allowEdit = 'post__actions__edit';
     let allowDelete = 'post__actions__delete';
     let allowLike = 'post__actions__like';
 
-    if (userId === post.userId || rank === 1) {
+    if (userId === post.userId || parseInt(rank) === 1) {
         allowEdit = 'post__actions__edit post__actions__edit__allow';
         allowDelete = 'post__actions__delete post__actions__delete__allow';
     }
@@ -47,15 +63,16 @@ export default function PostThread(props) {
     if (post.tag !== "" && post.replyTo === "ORIGINAL") {
         showTag = 'post__tag--show'
     }
+    
+    const getToken = getCookie("token");
 
     function handleLikePost(evt) {
         evt.preventDefault();
-        const getToken = JSON.parse(localStorage.getItem('Token'));
         const fetchUrl = 'http://localhost:4200/api/post/' + post._id + '/like'
         fetch(fetchUrl, {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + getToken['token'],
+                'Authorization': 'Bearer ' + getToken,
                 'Content-Type': 'application/json',
                 'Accept': 'application/json'
             }

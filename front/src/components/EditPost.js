@@ -9,7 +9,22 @@ export default function EditPost(props) {
     })
     const [selectedFile, setSelectedFile] = useState();
 
-    const getToken = JSON.parse(localStorage.getItem('Token'));
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+    const getToken = getCookie("token");
 
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -24,7 +39,7 @@ export default function EditPost(props) {
         fetch(fetchUrl, {
             method: 'PUT',
             headers: {
-                'Authorization': 'Bearer ' + getToken['token'],
+                'Authorization': 'Bearer ' + getToken,
             },
             body: data
         })

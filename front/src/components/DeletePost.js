@@ -4,7 +4,22 @@ import { useState } from 'react';
 export default function DeletePost(props) {
     const { deletePost, handleDisableDeletePost } = props;
 
-    const getToken = JSON.parse(localStorage.getItem('Token'));
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+    }
+    const getToken = getCookie("token");
 
     function handleSubmit(evt) {
         evt.preventDefault();
@@ -14,7 +29,7 @@ export default function DeletePost(props) {
         fetch(fetchUrl, {
             method: 'DELETE',
             headers: {
-                'Authorization': 'Bearer ' + getToken['token'],
+                'Authorization': 'Bearer ' + getToken,
             }
         })
             .then((res) => {console.log(res); res.json()})

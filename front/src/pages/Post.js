@@ -18,7 +18,24 @@ export default function Post(props) {
     });
     const [deletePost, setDeletePost] = useState({postId:''})
 
-    const getToken = JSON.parse(localStorage.getItem('Token'));
+    function getCookie(cname) {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+        let ca = decodedCookie.split(';');
+        for(let i = 0; i <ca.length; i++) {
+          let c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+    
+    const getToken = getCookie("token");
+
     let fetchUrl = ''
     if (post === undefined) {
         const url = new URL(window.location.href);
@@ -33,18 +50,12 @@ export default function Post(props) {
         fetch(fetchUrl, {
         method: 'GET',
         headers: {
-            'Authorization': 'Bearer ' + getToken['token'],
+            'Authorization': 'Bearer ' + getToken,
             'Content-Type': 'application/json',
             'Accept': 'application/json',
             }
         })
-            .then((res) => {
-                if(res.status === 401)
-                {
-                    localStorage.clear();
-                }
-                res.json()
-            })
+            .then((res) => res.json())
             .then((data) => {
                 setPosts(data);
             })
@@ -58,7 +69,7 @@ export default function Post(props) {
         fetch(fetchUrl, {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + getToken['token'],
+                'Authorization': 'Bearer ' + getToken,
             },
             body: data
     })
