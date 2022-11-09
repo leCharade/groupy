@@ -87,7 +87,6 @@ body {
   width: fit-content;
   height: 250px;
   display: flex;
-  flex: wrap;
   flex-direction: column;
   justify-content: space-around;
 }
